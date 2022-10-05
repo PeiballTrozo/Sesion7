@@ -19,9 +19,8 @@ public class Main {
         while (true) {
             System.out.println("\tSeleccione el trabajo a realizar");
             System.out.println("1.- Insertar articulo");
-            System.out.println("2.- Actualizar articulo");
-            System.out.println("3.- Borrar articulo");
-            System.out.println("4.- Mostrar lista de articulos");
+            System.out.println("2.- Borrar articulo");
+            System.out.println("3.- Mostrar lista de articulos");
             System.out.println("0.- Salir");
 
             switch (sc.nextInt()) {
@@ -32,15 +31,14 @@ public class Main {
                     ObtenerArticuloFromUsuario();
                     break;
                 case 2:
-                    ObtenerArticuloUpdateFromUsuario();
+                    EliminarArticulo();
                     break;
                 case 3:
-                    EliminarArticulo();
-                case 4:
                     MostrarListaArticulos();
                     break;
                 default:
                     System.out.println("La opcion seleccionada no existe");
+                    break;
             }
         }
 
@@ -70,27 +68,6 @@ public class Main {
         System.out.println("\tIntroduzca el autor del articulo");
         String autor=sc.nextLine();
         if(controlador.insertArticulo(nombre, numero,texto,autor)){
-            System.out.println("El articulo ha sido introducido en la base de datos con exito");
-        }else{
-            System.out.println("El articulo no se ha introducido");
-        }
-    }
-
-    private static void ObtenerArticuloUpdateFromUsuario() {
-        sc.nextLine();
-        System.out.println("\tIntroduzca el id del articulo a cambiar");
-        int id= sc.nextInt();
-        sc.nextLine();
-        System.out.println("\tIntroduzca el nombre del articulo");
-        String nombre=sc.nextLine();
-        System.out.println("\tIntroduzca el numero de paginas");
-        int numero= sc.nextInt();
-        sc.nextLine();
-        System.out.println("\tIntroduzca el texto del articulo");
-        String texto=sc.nextLine();
-        System.out.println("\tIntroduzca el autor del articulo");
-        String autor=sc.nextLine();
-        if(controlador.updateArticulo(id,nombre, numero,texto,autor)){
             System.out.println("El articulo ha sido introducido en la base de datos con exito");
         }else{
             System.out.println("El articulo no se ha introducido");

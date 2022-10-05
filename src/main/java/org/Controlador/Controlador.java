@@ -82,31 +82,6 @@ public class Controlador implements ConexionBBDD{
         return true;
     }
 
-    @Override
-    public boolean updateArticulo(int id, String nombre, int numPaginas, String texto, String autor) {
-        conexion= getConexion();
-        try{
-            if(conexion!=null){
-                PreparedStatement pr= conexion.prepareStatement("update from articulo set id=?, nombre=?,numPaginas=?,texto=?,autor=? " +
-                        "where id=?");
-                pr.setInt(1,id);
-                pr.setString(2, nombre);
-                pr.setInt(3, numPaginas);
-                pr.setString(4, texto);
-                pr.setString(5, autor);
-                pr.setInt(6,id);
-                pr.executeUpdate();
-                conexion.commit();
-                pr.close();
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-            cerrarConexion();
-            return false;
-        }
-        return true;
-    }
-
     private Connection getConexion() {
         if(conexion==null){
             crearConexion();

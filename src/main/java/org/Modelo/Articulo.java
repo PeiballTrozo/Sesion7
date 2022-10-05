@@ -1,10 +1,22 @@
 package org.Modelo;
 
+/**
+ * Mi base de datos:
+ * CREATE TABLE `articulo` (
+ *   `id` int(11) NOT NULL AUTO_INCREMENT,
+ *   `nombre` varchar(50) NOT NULL,
+ *   `numPaginas` int(11) DEFAULT NULL,
+ *   `texto` varchar(255) DEFAULT NULL,
+ *   `autor` varchar(50) DEFAULT NULL,
+ *   PRIMARY KEY (`id`)
+ * )
+ */
 public class Articulo {
     private String nombre;
     private int numPaginas;
     private String texto;
     private String autor;
+
 
     public Articulo(String nombre, int numPaginas, String texto, String autor) {
         this.nombre = nombre;
