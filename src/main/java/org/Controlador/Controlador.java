@@ -30,18 +30,81 @@ public class Controlador implements ConexionBBDD{
 
                     listaArticulo.add(new Articulo(nombre,numPaginas,texto,autor));
                 }
+                pr.close();
+                rs.close();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return  listaArticulo;
+
     }
 
 
 
     @Override
-    public void insertArticulo(String nombre, int numPaginas, String texto, String autor) {
+    public boolean insertArticulo(String nombre, int numPaginas, String texto, String autor) {
+        conexion= getConexion();
+        try{
+            if(conexion!=null){
+                PreparedStatement pr= conexion.prepareStatement("insert into articulo (nombre, numPaginas, texto,autor) values(?,?,?,?)");
+                pr.setString(1, nombre);
+                pr.setInt(2, numPaginas);
+                pr.setString(3, texto);
+                pr.setString(4, autor);
+                pr.executeUpdate();
+                conexion.commit();
+                pr.close();
+            }
+        } catch (SQLException e) {
+            cerrarConexion();
+            return false;
+        }
+        return true;
 
+    }
+
+    @Override
+    public boolean deleteArticulo(int id) {
+        conexion= getConexion();
+        try{
+            if(conexion!=null){
+                PreparedStatement pr= conexion.prepareStatement("delete from articulo where id=?");
+                pr.setInt(1,id);
+                pr.executeUpdate();
+                conexion.commit();
+                pr.close();
+            }
+        } catch (SQLException e) {
+            cerrarConexion();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean updateArticulo(int id, String nombre, int numPaginas, String texto, String autor) {
+        conexion= getConexion();
+        try{
+            if(conexion!=null){
+                PreparedStatement pr= conexion.prepareStatement("update from articulo set id=?, nombre=?,numPaginas=?,texto=?,autor=? " +
+                        "where id=?");
+                pr.setInt(1,id);
+                pr.setString(2, nombre);
+                pr.setInt(3, numPaginas);
+                pr.setString(4, texto);
+                pr.setString(5, autor);
+                pr.setInt(6,id);
+                pr.executeUpdate();
+                conexion.commit();
+                pr.close();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            cerrarConexion();
+            return false;
+        }
+        return true;
     }
 
     private Connection getConexion() {
@@ -62,6 +125,13 @@ public class Controlador implements ConexionBBDD{
         }
         catch (Exception e) {
             System.out.println(e);
+        }
+    }
+    public void cerrarConexion(){
+        try {
+            conexion.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
